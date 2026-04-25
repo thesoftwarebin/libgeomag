@@ -15,7 +15,7 @@ EMBEDDED_LIB = libgeomag-embedded.a
 
 OBJS = geomag.o
 
-UNIT_TESTS = test_geomag print_model
+UNIT_TESTS = test_geomag 
 
 all: $(UNIT_TESTS) $(STATIC_LIB) #$(SHARED_LIB)
 
@@ -37,15 +37,18 @@ $(SHARED_LIB): $(OBJS)
 $(UNIT_TESTS): % : %.c $(STATIC_LIB)
 	$(CC) -L. $(CFLAGS) $< -Bstatic -lgeomag -Bdynamic $(LIBS) -o $@
 
+print_model: print_model.o geomag.o
+	$(CC) -L. $(CFLAGS) print_model.o geomag.o -o $@
+
 igrf.c: print_model
 	./print_model
 
 igrf.o: igrf.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -fPIC $(CFLAGS) -c $< -o $@
 
 test_geomag_embedded: test_geomag.c libgeomag-embedded.a
 	$(CC) -L. $(CFLAGS) -DTEST_EMBEDDED $< -Bstatic -lgeomag-embedded -Bdynamic $(LIBS) -o $@
 
 clean:
-	-rm $(UNIT_TESTS) $(OBJS) $(SHARED_LIB) $(STATIC_LIB)
-	-rm libgeomag-embedded.a igrf.o geomag-embedded.o test_geomag_embedded
+	-rm -vf $(UNIT_TESTS) $(OBJS) $(SHARED_LIB) $(STATIC_LIB) $(EMBEDDED_LIB)
+	-rm -vf igrf.o geomag-embedded.o test_geomag_embedded igrf.c print_model.o print_model.exe print_model

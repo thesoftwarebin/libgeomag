@@ -4,3 +4,5 @@ igrf.c
 *.a
 *.so
 *.nc
+*.exe
+
