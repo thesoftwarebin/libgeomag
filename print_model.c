@@ -11,12 +11,12 @@
 
 void print_model(FILE *const os, BFieldModel const*const model);
 
-int main()
+int main(int argc, char* argv[])
 {
 	BFieldModel model;
 	FILE *fp;
 
-	if (!read_model(&model, "IGRF12.COF")) {
+	if (!read_model(&model, ((argc>=2)?argv[1]:"IGRF12.COF"))) {
 		fprintf(stderr, "Fatal: failed to open coefficient file\n");
 		return 0;
 	}
