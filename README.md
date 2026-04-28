@@ -61,3 +61,10 @@ time, another executable, `print_model`, will be generated, which is run
 to generate a source file `igrf.c`. This file contains the field
 coefficients and is built as part of `libgeomag-embedded.a`.
 
+# Modifications introduced by the fork of `thesoftwarebin`
+
+The most relevant changes are:
+
+- added `IGRF14.COF`
+- modified `print_model` so that it can accept a .COF filename argument; also, it now defaults to `IGRF14.COF`
+
